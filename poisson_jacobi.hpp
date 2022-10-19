@@ -60,14 +60,10 @@ struct Stencil {
 enum Cell { UNKNOWN = 0, DIR = 1, NEU = 2, ROB = 0 };
 
 
-void PoissonJacobiStencil(size_t resolution,size_t threads,int *iterations,double *runtime, double *runtime2) {
- 
-  
+void PoissonJacobiStencil(size_t resolution,size_t threads,int *iterations,double *runtime, double *runtime2) { 
   size_t NY = resolution;
   size_t NX = (2 * NY)-1;
   double h = 1.0 / (NY - 1);
-
-
   const auto stencil = Stencil(h);
 
   // domain cell types
@@ -162,7 +158,6 @@ void PoissonJacobiStencil(size_t resolution,size_t threads,int *iterations,doubl
        std::chrono::duration_cast<std::chrono::duration<double>>(stop - start)
            .count();
   
-
   std::cout << "Iterations=" << num << std::endl;
   std::cout << "Runtime=" << std::scientific << seconds << std::endl;
   std::cout << "Average runtime per iteration=" << seconds/num << std::endl;
