@@ -126,42 +126,6 @@ void PoissonJacobiStencil(size_t resolution,size_t threads,int *iterations,doubl
     sol.swap(sol2);
   };
 
-/*
-  auto ComputeResidual = [](std::vector<double> &sol, std::vector<double> &rhs,
-                            const Stencil &stencil, size_t NX, size_t NY) {
-    MatrixView<double> solView(sol, NX, NY);
-    MatrixView<double> rhsView(rhs, NX, NY);
-
-    std::vector<double> residual(NX * NY, 0);
-    MatrixView<double> residualView(residual, NX, NY);
-    for (size_t j = 1; j != NY - 1; ++j) {
-      for (size_t i = 1; i != NX - 1; ++i) {
-        residualView.set(i, j) =
-            rhsView.get(i, j) -
-            (solView.get(i, j) * stencil.C + solView.get(i + 1, j) * stencil.E +
-             solView.get(i - 1, j) * stencil.W +
-             solView.get(i, j - 1) * stencil.S +
-             solView.get(i, j + 1) * stencil.N);
-      }
-    }
-    return residual;
-  };
-  auto ComputeError = [](std::vector<double> &sol,
-                         std::vector<double> &reference, size_t NX, size_t NY) {
-    MatrixView<double> solView(sol, NX, NY);
-    MatrixView<double> referenceView(reference, NX, NY);
-
-    std::vector<double> error(NX * NY, 0);
-    MatrixView<double> errorView(error, NX, NY);
-
-    for (size_t j = 1; j != NY - 1; ++j) {
-      for (size_t i = 1; i != NX - 1; ++i) {
-        errorView.set(i, j) = referenceView.get(i, j) - solView.get(i, j);
-      }
-    }
-    return error;
-  };
-*/
   // solution approximation starting with boundary initialized to dirichlet
   // conditions, else 0
   std::vector<double> solution(NX * NY, 0);
@@ -207,21 +171,5 @@ void PoissonJacobiStencil(size_t resolution,size_t threads,int *iterations,doubl
   *iterations=num;
   *runtime=seconds/num;
   *runtime2=runtimein/num;
-
-/*
-  {
-    auto residual = ComputeResidual(solution, rightHandSide, stencil, NX, NY);
-    auto residualNorm = NormL2(residual);
-    std::cout << std::scientific << "|residual|=" << residualNorm << std::endl;
-    auto residualMax = NormInf(residual);
-    std::cout << std::scientific << "|residualMax|=" << residualMax
-              << std::endl;
-    auto error = ComputeError(solution, referenceSolution, NX, NY);
-    auto errorNorm = NormL2(error);
-    std::cout << std::scientific << "|error|=" << errorNorm << std::endl;
-    auto errorMax = NormInf(error);
-    std::cout << std::scientific << "|errorMax|=" << errorMax << std::endl;
-  }
-*/
  
 }
