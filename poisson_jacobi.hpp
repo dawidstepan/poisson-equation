@@ -57,7 +57,7 @@ struct Stencil {
   const double C, N, S, W, E;
 };
 
-enum Cell { UNKNOWN = 0, DIR = 1, NEU = 2, ROB = 0 };
+enum Cell { UNKNOWN = 0, DIR = 1, NEU = 2 };
 
 
 void PoissonJacobiStencil(size_t resolution,size_t threads,int *iterations,double *runtime, double *runtime2) { 
